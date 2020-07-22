@@ -1,0 +1,10 @@
+<div 
+  {{on 'mousedown' this.startDrag}}
+  {{on 'mouseup' this.finishDrag}}
+  {{on 'mouseenter' this.enterItem}}
+  {{on 'mouseleave' this.leaveItem}}
+  >
+  {{!-- TODO: Figure out how to animate this smoothly --}}
+  <div class='placeholder {{if this.isDraggingOver 'transform transition-all duration-500 ease-in-out h-8'}}'></div>
+  {{yield}}
+</div>

@@ -1,0 +1,5 @@
+.draggable.hovered:before {
+  content: ' ';
+  display: block;
+  height: 50px;
+}
