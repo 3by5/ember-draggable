@@ -1,16 +1,12 @@
 <div class='p-6'>
   <div class='text-xl mb-3 font-semibold'>Basic Drag and Drop</div>
-  <Droppable @droppableId='basic-list' class='space-y-2'>
-    <Draggable @draggableType='item' @draggableId={{1}} @index={{1}}>
-      <div class='border-1 bg-white border-gray-300 rounded-md p-3 w-32 shadow-md'>Item #1</div>
-    </Draggable>
-
-    <Draggable @draggableType='item' @draggableId={{2}} @index={{2}}>
-      <div class='border-1 bg-white border-gray-300 rounded-md p-3 w-32 shadow-md'>Item #2</div>
-    </Draggable>
-
-    <Draggable @draggableType='item' @draggableId={{3}} @index={{3}}>
-      <div class='border-1 bg-white border-gray-300 rounded-md p-3 w-32 shadow-md'>Item #3</div>
-    </Draggable>
-  </Droppable>
+  <DraggableContext @onDrop={{this.reorderItems}}>
+    <Droppable @droppableId='basic-list' class='bg-gray-200 inline-block h-64 p-3 space-y-2'>
+      {{#each basicDragItems as |item index|}}
+        <Draggable @draggableType='item' @draggableId={{index}} @index={{index}}>
+          <div class='border-1 bg-white border-gray-300 rounded-md p-3 w-32 shadow-md'>Item #{{item}}</div>
+        </Draggable>
+      {{/each}}
+    </Droppable>
+  </DraggableContext>
 </div>  

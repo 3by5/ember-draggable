@@ -7,6 +7,14 @@ export default class DraggableService extends Service {
   sourceIndex = null;
   destination = null;
   destinationIndex = null;
+  startingPosition = {
+    x: null,
+    y: null
+  }
+  currentPosition = {
+    x: null,
+    y: null
+  }
 
   setDraggable(draggable) {
     this.currentDraggable = draggable
@@ -49,6 +57,7 @@ export default class DraggableService extends Service {
     }
     this._resetState()
     console.log(dragResult)
+    this.dropHandler(dragResult)
     return dragResult
   }
 
