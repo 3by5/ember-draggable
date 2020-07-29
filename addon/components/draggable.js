@@ -19,6 +19,7 @@ export default class Draggable extends Component {
 
   @action
   startDrag(e) {
+    if(e.button !== 0) { return null } //only left clicks
     e.preventDefault()
     this.draggable.setDraggable({
       draggableId: this.draggableId,
@@ -27,9 +28,9 @@ export default class Draggable extends Component {
     this.draggable.setSourceIndex(this.index)
     this.draggable.startDrag()
     this.draggable.isDragging = true
-    this.isActiveDraggable = true
     this.startingX = e.clientX
     this.startingY = e.clientY
+    this.draggableNode = this.element
     this._attachMouseEvents()
   }
 
@@ -61,17 +62,8 @@ export default class Draggable extends Component {
     this.height = rect.height
   }
 
-  /* 
-    When hovering a draggable, this will expand a placeholder to make 'space' for the draggable in the list
-  */
-  get placeholderStyle() {
-    return htmlSafe(`height: ${this.height}px;`)
-  }
 
-  get shouldHide() {
-    return (this.isActiveDraggable && !this.draggable.copy)
-  }
-
+  
   _notDragging() {
     return !this.draggable.isDragging
   }
@@ -79,14 +71,6 @@ export default class Draggable extends Component {
   _attachMouseEvents() {
     document.addEventListener('mousemove', this.domEventHandlers.mouseMove)
     document.addEventListener('mouseup', this.domEventHandlers.mouseUp)
-    const rect = this.element.getBoundingClientRect()
-    let node = this.element.cloneNode(true)
-    node.style.position = 'absolute'
-    node.style.zIndex = 10
-    node.style.left = `${rect.x}px`
-    node.style.top = `${rect.y}px`
-    this.draggableNode = node
-    document.body.append(this.draggableNode)
   }
 
   _detachMouseEvent() {
@@ -99,11 +83,13 @@ export default class Draggable extends Component {
     const offsetX = e.clientX - this.startingX
     const offsetY = e.clientY - this.startingY
     this.draggableNode.style.transform = `translate(${offsetX}px, ${offsetY}px)`
+    this.draggableNode.style.zIndex = 10000
   }
 
   _onMouseUp(e) {
     this.finishDrag()
-    this.draggableNode.remove()
+    this.draggableNode.style.transform = ''
+    this.draggableNode.style.zIndex = ''
     this.draggableNode = null
     document.removeEventListener('mouseup', this.domEventHandlers.mouseUp)
   }

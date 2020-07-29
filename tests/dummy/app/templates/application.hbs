@@ -1,7 +1,7 @@
 <div class='p-6'>
   <div class='text-xl mb-3 font-semibold'>Basic Drag and Drop</div>
   <DraggableContext @onDrop={{this.reorderItems}}>
-    <Droppable @droppableId='basic-list' class='bg-gray-200 inline-block h-64 p-3 space-y-2'>
+    <Droppable @droppableId='basic-list' class='bg-gray-200 inline-block p-3 space-y-2'>
       {{#each basicDragItems as |item index|}}
         <Draggable @draggableType='item' @draggableId={{index}} @index={{index}}>
           <div class='border-1 bg-white border-gray-300 rounded-md p-3 w-32 shadow-md'>Item #{{item}}</div>
